@@ -1,0 +1,1 @@
+questions are from different platforms create a linked list template and then execute the abstract methods.
