@@ -51,6 +51,10 @@ public class Queue extends Exception {
   }
 
   public void display() {
+    if (isEmpty()) {
+      System.out.println("Empty");
+      return;
+    }
     for (int i = 0; i <= end; i++) {
       System.out.print(data[i] + " ");
     }
