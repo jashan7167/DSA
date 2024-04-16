@@ -1,4 +1,4 @@
-package Queues.Basics;
+package Basics;
 
 public class Queue extends Exception {
   // queues can have two ptrs front and rear add at the back and remove from the
