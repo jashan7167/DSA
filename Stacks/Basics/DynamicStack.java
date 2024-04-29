@@ -1,4 +1,3 @@
-package Stacks.Basics;
 
 public class DynamicStack extends Stack{
   
