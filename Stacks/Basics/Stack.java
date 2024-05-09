@@ -1,4 +1,4 @@
-package Stacks.Basics;
+
 
 public class Stack {
   protected int[] data; // this is an array which have defined length and get full

@@ -1,4 +1,4 @@
-package Stacks.Basics;
+
 
 public class StackMain {
   public static void main(String[] args) throws Stackexception {

@@ -1,8 +1,6 @@
 import java.util.* ;
 import java.io.*; 
-/*************************************************************
 
-Following is the class structure of the Node class:
 
     class Node {
 		public int data;
@@ -14,9 +12,9 @@ Following is the class structure of the Node class:
 	  	}
     }
 
-*************************************************************/
 
-public class Solution {
+
+public class addonetonorepbylinkedlist {
 	public static Node reverse(Node head)
 	{
 		Node prev = null;
