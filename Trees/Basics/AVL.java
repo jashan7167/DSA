@@ -1,4 +1,4 @@
-public class BinarySearchTree {
+public class AVL {
 
   public class Node {
     private int value;
@@ -55,19 +55,76 @@ public class BinarySearchTree {
       node = new Node(value);
       return node;
     }
-    // if value is smaller than the value in node then traverse to left and compare
+
     if (value < node.value) {
       node.left = insert(value, node.left);
     }
-    // if value is greater than value in node the traverse to right and compare
+
     if (value > node.value) {
       node.right = insert(value, node.right);
     }
-    // while backtracking adjust the height of the nodes as new node is added they
-    // have to be changed
+
     node.height = Math.max(height(node.left), height(node.right)) + 1;
-    // if its not null then the same node is returned that will be no change
+    // while inserting the nodes at each return phase the rotate function will be
+    // called and search for unbalanced node when it finds it the rotation happens
+    return rotate(node);
+  }
+
+  // as thought it is called for each an every node as we move above it will be
+  // satisfied only once in other cases just return node itself
+  public Node rotate(Node node) {
+    if (height(node.left) - height(node.right) > 1) {
+      System.out.println("left heavy" + node.value);
+      // left heavy
+      if (height(node.left.left) - height(node.left.right) > 0) {
+        // left left case
+
+        return rightRotate(node);
+      }
+      if (height(node.left.left) - height(node.left.right) < 0) {
+        // left right case
+        node.left = leftRotate(node.left);
+        return rightRotate(node);
+      }
+    }
+    if (height(node.left) - height(node.right) < -1) {
+      // right heavy
+      System.out.println("right heavy" + node.value);
+      if (height(node.right.left) - height(node.right.right) < 0) {
+        // right right case
+
+        return leftRotate(node);
+      }
+      if (height(node.right.left) - height(node.right.right) > 0) {
+        // right left case
+        node.right = rightRotate(node.right);
+        return leftRotate(node);
+      }
+    }
     return node;
+  }
+
+  public Node rightRotate(Node p) {
+    Node c = p.left;
+    Node t = c.right;
+    c.right = p;
+    p.left = t;
+    p.height = Math.max(height(p.left), height(p.right));
+    c.height = Math.max(height(c.left), height(c.right));
+
+    return c;
+  }
+
+  public Node leftRotate(Node c) {
+    Node p = c.right;
+    Node t = p.left;
+    p.left = c;
+    c.right = t;
+    p.height = Math.max(height(p.left), height(p.right));
+    c.height = Math.max(height(c.left), height(c.right));
+
+    return p;
+
   }
 
   public void populateSorted(int[] nums) {
@@ -103,48 +160,12 @@ public class BinarySearchTree {
     }
   }
 
-  public void postOrder(Node node) {
-    if (node == null) {
-      return;
-    }
-
-    postOrder(node.left);
-    postOrder(node.right);
-    System.out.println(node.value);
-  }
-
-  public void preOrder(Node node) {
-    if (node == null) {
-      return;
-    }
-
-    System.out.println(node.value);
-    preOrder(node.left);
-    preOrder(node.right);
-  }
-
-  public void inOrder(Node node) {
-    if (node == null) {
-      return;
-    }
-
-    inOrder(node.left);
-    System.out.println(node.value);
-    inOrder(node.right);
-  }
-
   public static void main(String[] args) {
-    BinarySearchTree tree = new BinarySearchTree();
-    // int[] nums = { 5, 2, 7, 1, 4, 6, 9, 8, 4, 10 }; h
-    // tree.populate(nums);
+    AVL tree = new AVL();
     int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    tree.populateSorted(nums);
-    System.out.println("Preorder");
-    tree.preOrder(tree.root);
-    System.out.println("PostOrder");
-    tree.postOrder(tree.root);
-    System.out.println("In order");
-    tree.inOrder(tree.root);
+    tree.populate(nums);
+    tree.display();
+    System.out.println(tree.height(tree.root));
 
   }
 

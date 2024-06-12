@@ -1,22 +1,18 @@
 public class linearsearch {
   public static int linearSearch(int n, int num, int[] arr) {
-    int idx=0;
+    int idx = 0;
     int count = 0;
     for (int i = 0; i < arr.length; i++) {
       if (arr[i] == num) {
-        if(count==0)
-        {
-           idx = i;
-           count++;
-        }
-        else 
-        {
+        if (count == 0) {
+          idx = i;
+          count++;
+        } else {
           count++;
         }
       }
     }
-    if(count==0)
-    {
+    if (count == 0) {
       return -1;
     }
     return idx;
