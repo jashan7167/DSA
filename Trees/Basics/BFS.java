@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.tree.TreeNode;
+
 public class BFS {
   class Node {
     int value;
@@ -85,6 +87,51 @@ public class BFS {
 
   }
 
+  public List<List<Integer>> zigzagLevelOrder(Node root) {
+    List<List<Integer>> result = new ArrayList<>();
+    boolean rev = false;
+
+    if (root == null) {
+      return result;
+    }
+
+    Deque<Node> queue = new LinkedList<>();
+    queue.offer(root);
+
+    while (!queue.isEmpty()) {
+      // for each level the node is removed and its children are added then we again
+      // calculate the level size and repeat until we reach leaf nodes
+      int levelSize = queue.size();
+      List<Integer> curlevel = new ArrayList<>();
+
+      for (int i = 0; i < levelSize; i++) {
+        if (!rev) {
+          Node currentNode = queue.pollFirst();
+          curlevel.add(currentNode.value);
+          if (currentNode.left != null) {
+            queue.addLast(currentNode.left);
+          }
+          if (currentNode.right != null) {
+            queue.addLast(currentNode.right);
+          }
+        } else {
+          Node currentNode = queue.pollLast();
+          curlevel.add(currentNode.value);
+          if (currentNode.right != null) {
+            queue.addFirst(currentNode.right);
+          }
+          if (currentNode.left != null) {
+            queue.addFirst(currentNode.left);
+          }
+        }
+      }
+      result.add(curlevel);
+      rev = !rev;
+      System.out.println(rev);
+    }
+    return result;
+  }
+
   private Node insert(int value, Node node) {
     if (node == null) {
       Node newnode = new Node(value);
@@ -122,5 +169,6 @@ public class BFS {
     System.out.println("tree created");
     System.out.println(tree.levelOrder(tree.root));
     System.out.println(tree.findSuccessor(tree.root, 4).value);
+    System.out.println(tree.zigzagLevelOrder(tree.root));
   }
 }
