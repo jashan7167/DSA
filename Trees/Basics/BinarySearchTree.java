@@ -133,18 +133,36 @@ public class BinarySearchTree {
     inOrder(node.right);
   }
 
+  public boolean findVal(Node root, int val) {
+    if (root == null) // if it goes to null finding the node obviously it doesnot exist then
+    {
+      return false;
+    }
+    if (root.value == val) // found the node return true value
+    {
+      return true;
+    }
+    if (val > root.value) {
+      return findVal(root.right, val);
+    } else {
+      return findVal(root.left, val);
+    }
+
+  }
+
   public static void main(String[] args) {
     BinarySearchTree tree = new BinarySearchTree();
-    // int[] nums = { 5, 2, 7, 1, 4, 6, 9, 8, 4, 10 }; h
-    // tree.populate(nums);
-    int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    tree.populateSorted(nums);
+    int[] nums = { 5, 2, 7, 1, 4, 6, 9, 8, 4, 10 };
+    tree.populate(nums);
+    // int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    // tree.populateSorted(nums);
     System.out.println("Preorder");
     tree.preOrder(tree.root);
     System.out.println("PostOrder");
     tree.postOrder(tree.root);
     System.out.println("In order");
     tree.inOrder(tree.root);
+    System.out.println(tree.findVal(tree.root, 11));
 
   }
 
