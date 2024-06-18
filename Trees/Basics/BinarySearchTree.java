@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class BinarySearchTree {
 
   public class Node {
@@ -16,6 +18,7 @@ public class BinarySearchTree {
   }
 
   private Node root;
+  Stack<Node> st = new Stack<>();
 
   public int height(Node node) {
     if (node == null) {
@@ -97,6 +100,23 @@ public class BinarySearchTree {
     return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
   }
 
+  public void Dfsusingstack(Node node) {
+    if (node == null) {
+      return;
+    }
+    st.add(node);
+    while (!st.isEmpty()) {
+      Node newnode = st.pop();
+      System.out.print(newnode.value);
+      if (newnode.left != null) {
+        st.add(newnode.left);
+      }
+      if (newnode.right != null) {
+        st.add(newnode.right);
+      }
+    }
+  }
+
   public void populate(int[] nums) {
     for (int i = 0; i < nums.length; i++) {
       this.insert(nums[i]);
@@ -110,7 +130,7 @@ public class BinarySearchTree {
 
     postOrder(node.left);
     postOrder(node.right);
-    System.out.println(node.value);
+    System.out.print(node.value);
   }
 
   public void preOrder(Node node) {
@@ -118,7 +138,7 @@ public class BinarySearchTree {
       return;
     }
 
-    System.out.println(node.value);
+    System.out.print(node.value);
     preOrder(node.left);
     preOrder(node.right);
   }
@@ -160,8 +180,10 @@ public class BinarySearchTree {
     tree.preOrder(tree.root);
     System.out.println("PostOrder");
     tree.postOrder(tree.root);
-    System.out.println("In order");
-    tree.inOrder(tree.root);
+    // System.out.println("In order");
+    // tree.inOrder(tree.root);
+    System.out.println();
+    tree.Dfsusingstack(tree.root);
     System.out.println(tree.findVal(tree.root, 11));
 
   }

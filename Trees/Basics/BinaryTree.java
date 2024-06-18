@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.*;
 
 class BinaryTree {
   public BinaryTree() {
@@ -16,6 +17,8 @@ class BinaryTree {
   }
 
   private Node root;
+
+  Stack<Node> st = new Stack<>();
 
   // insert elements
 
@@ -69,6 +72,10 @@ class BinaryTree {
   public void prettydisplay() {
     prettydisplay(root, 0);
   }
+
+
+
+ 
 
   public void prettydisplay(Node node, int level) {
     if (node == null) {
