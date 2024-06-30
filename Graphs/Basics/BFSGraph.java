@@ -1,4 +1,3 @@
-package Questions;
 
 //{ Driver Code Starts
 // Initial Template for Java
