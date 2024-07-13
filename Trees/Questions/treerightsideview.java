@@ -33,12 +33,12 @@ class Solution {
         if (current.right != null) {
           queue.offer(current.right);
         }
+        // take out the last node at the level
         if (i == levelSize - 1) {
           ls.add(current.val);
         }
       }
     }
     return ls;
-
   }
 }
