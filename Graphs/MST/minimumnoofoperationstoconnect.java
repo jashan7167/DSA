@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-public class DisjointSet {
+class DisjointSet {
   List<Integer> rank = new ArrayList<>();
   List<Integer> parent = new ArrayList<>();
   List<Integer> size = new ArrayList<>();
@@ -57,38 +56,36 @@ public class DisjointSet {
     }
 
   }
-
 }
 
-class Main {
+class Solution {
+  public int makeConnected(int n, int[][] connections) {
+    DisjointSet ds = new DisjointSet(n);
+    int cntExtras = 0;
+    int l = connections.length;
 
-  public static void main(String[] args) {
-    DisjointSet set = new DisjointSet(7);
-    set.unionByRank(1, 2);
-    set.unionByRank(2, 3);
-    set.unionByRank(4, 5);
-    set.unionByRank(6, 7);
-    set.unionByRank(5, 6);
-    set.unionBySize(1, 2);
-    set.unionBySize(2, 3);
-    set.unionBySize(4, 5);
-    set.unionBySize(6, 7);
-    set.unionBySize(5, 6);
+    for (int i = 0; i < l; i++) {
+      int u = connections[i][0];
+      int v = connections[i][1];
 
-    if (set.findUPar(3) == set.findUPar(7)) {
-      System.out.println("same");
-    } else {
-      System.out.println("Not same");
+      if (ds.findUPar(u) == ds.findUPar(v)) {
+        cntExtras++;
+      } else {
+        ds.unionBySize(u, v);
+      }
     }
 
-    // set.unionByRank(3, 7);
-    set.unionBySize(3, 7);
-    if (set.findUPar(3) == set.findUPar(7)) {
-      System.out.println("same");
-    } else {
-      System.out.println("Not same");
+    int cntC = 0;
+    for (int i = 0; i < n; i++) {
+      if (ds.parent.get(i) == i) {
+        cntC++;
+      }
     }
-
+    int ans = cntC - 1;
+    if (cntExtras >= ans) {
+      return ans;
+    } else {
+      return -1;
+    }
   }
-
 }

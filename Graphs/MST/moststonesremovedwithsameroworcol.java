@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-public class DisjointSet {
+class DisjointSet {
   List<Integer> rank = new ArrayList<>();
   List<Integer> parent = new ArrayList<>();
   List<Integer> size = new ArrayList<>();
@@ -57,38 +56,38 @@ public class DisjointSet {
     }
 
   }
-
 }
 
-class Main {
-
-  public static void main(String[] args) {
-    DisjointSet set = new DisjointSet(7);
-    set.unionByRank(1, 2);
-    set.unionByRank(2, 3);
-    set.unionByRank(4, 5);
-    set.unionByRank(6, 7);
-    set.unionByRank(5, 6);
-    set.unionBySize(1, 2);
-    set.unionBySize(2, 3);
-    set.unionBySize(4, 5);
-    set.unionBySize(6, 7);
-    set.unionBySize(5, 6);
-
-    if (set.findUPar(3) == set.findUPar(7)) {
-      System.out.println("same");
-    } else {
-      System.out.println("Not same");
+class Solution {
+  public int removeStones(int[][] stones) {
+    int maxRow = 0;
+    int maxCol = 0;
+    int n = stones.length;
+    for (int i = 0; i < n; i++) {
+      maxRow = Math.max(maxRow, stones[i][0]);
+      maxCol = Math.max(maxCol, stones[i][1]);
+    }
+    // the no of nodes are basically maxRow + maxCol + 1
+    // the rows and col are connected using disjoint set to create the components
+    // hence we can find the answer using n - no of components
+    DisjointSet ds = new DisjointSet(maxRow + maxCol + 1);
+    // store the unique nodes in it
+    HashMap<Integer, Integer> stoneNodes = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+      int nodeRow = stones[i][0];
+      int nodeCol = stones[i][1] + maxRow + 1;
+      ds.unionBySize(nodeRow, nodeCol);
+      stoneNodes.put(nodeRow, 1);
+      stoneNodes.put(nodeCol, 1);
     }
 
-    // set.unionByRank(3, 7);
-    set.unionBySize(3, 7);
-    if (set.findUPar(3) == set.findUPar(7)) {
-      System.out.println("same");
-    } else {
-      System.out.println("Not same");
+    int cnt = 0;
+    for (Map.Entry<Integer, Integer> it : stoneNodes.entrySet()) {
+      if (ds.findUPar(it.getKey()) == it.getKey()) {
+        cnt++;
+      }
     }
 
+    return n - cnt;
   }
-
 }
