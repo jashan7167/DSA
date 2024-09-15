@@ -1,0 +1,80 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        ListNode[] result = new ListNode[k];
+        int length = 0;
+        ListNode ctr = head;
+        while (ctr != null) {
+            ctr = ctr.next;
+            length++;
+        }
+        System.out.println(length);
+        int remainder, parts;
+        remainder = length % k;
+        parts = (int) Math.ceil(length / k);
+        System.out.println(remainder + " " + parts);
+        // int l = 0;
+        // result[l] = head;
+        // redundant piece of code could be solved using one loop logical error in the
+        // remainder and parts calculation
+        // if (k >= length) {
+        // ListNode ptr = head;
+        // while (ptr != null) {
+        // if (ptr != null) {
+        // ListNode temp = ptr;
+        // ptr = ptr.next;
+        // temp.next = null;
+        // result[i++] = temp;
+        // }
+        // }
+        // return result;
+        // }
+        // int len = 1;
+        // while (len!=length) {
+        // ListNode ptr = result[i];
+        // int size = length / k;
+        // if (remainder != 0) {
+        // size++;
+        // remainder--;
+        // }
+        // int count = 1;
+        // while (count != size && ptr != null) {
+        // ptr = ptr.next;
+        // count++;
+        // }
+        // System.out.println("size:" + count + " " + "val" + ptr.val);
+        // if (ptr != null && i + 1 < result.length) {
+        // result[++i] = ptr.next;
+        // ptr.next = null;
+        // }
+        // len++;
+        // }
+        if (head == null) {
+            return result;
+        }
+        ListNode ptr = head;
+        for (int i = 0; i < k; i++) {
+            result[i] = ptr;
+            int currentPartSize = parts + (i < remainder ? 1 : 0);
+            for (int j = 0; j < currentPartSize - 1; j++) {
+                if (ptr != null)
+                    ptr = ptr.next;
+            }
+            if (ptr != null) {
+                ListNode nextPart = ptr.next;
+                ptr.next = null;
+                ptr = nextPart;
+            }
+        }
+        return result;
+    }
+}
